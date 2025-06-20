@@ -24,9 +24,9 @@ export default async function Home() {
             <Nav />
             <p className="border-8 my-5 border-gray-300 shadow-lg">coming from a decade long career in safety management and now working as a full-stack developer was no easy fit.
                 it took determination, working in a team, continuos learning and a genuine passion for problem solving.
-                Along the way, I've built and deployed real-world applications using modern technologies.
+                Along the way, I have built and deployed real-world applications using modern technologies.
                 I am exceptionally innovative and keen to learn new things.
-                if building practical, user-focused solutions with real impact is the goal, then I'm excited to contribute and grow with a team that shares the same drive
+                if building practical, user-focused solutions with real impact is the goal, then I am excited to contribute and grow with a team that shares the same drive
 
                 I am a husband, father and friend!
 
