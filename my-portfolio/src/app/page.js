@@ -12,7 +12,7 @@ import dalu from "@/../public/images/dalu.jpeg";
 export default async function Home() {
 
 
-  const query = await db.query(`SELECT * FROM all_ref ORDER BY id DESC`);
+  const query = await db.query(`SELECT * FROM all_ref ORDER BY reference_id DESC`);
   const allrefs = query.rows;
 
 
@@ -65,7 +65,7 @@ export default async function Home() {
                   <p>No comments yet.</p>
                 ) : (
                   allrefs.map((refs) => (
-                    <div key={refs.id} className="border p-3 rounded mb-4">
+                    <div key={refs.reference_id} className="border p-3 rounded mb-4">
                       <h3 className="font-bold">{refs.name}</h3>
                       <h5>{refs.source}</h5>
                       <p>{refs.comment}</p>
