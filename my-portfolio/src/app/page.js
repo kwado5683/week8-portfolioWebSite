@@ -22,14 +22,14 @@ export default async function Home() {
   return (
           <main>
             <Nav />
-            <p className="border-8 my-5 border-gray-300 shadow-lg">coming from a decade long career in safety management and now working as a full-stack developer was no easy fit.
-                it took determination, working in a team, continuos learning and a genuine passion for problem solving.
-                Along the way, I have built and deployed real-world applications using modern technologies.
-                I am exceptionally innovative and keen to learn new things.
-                if building practical, user-focused solutions with real impact is the goal, then I am excited to contribute and grow with a team that shares the same drive
+            <p className="border-8 my-5 border-gray-300 shadow-lg">Coming from a decade-long career in safety management and transitioning into full-stack development was no easy feat.
+It required determination, teamwork, continuous learning, and a genuine passion for problem-solving.
 
-                I am a husband, father and friend!
+Along the way, I have built and deployed real-world applications using modern technologies, always striving to create practical, user-focused solutions. I take pride in being innovative, adaptable, and always eager to learn something new.
 
+If the goal is building impactful, meaningful products that solve real problems, then I am excited to contribute and grow alongside a team that shares the same drive.
+
+Beyond tech, I am a husband, a father, and a friend
             </p>
             <div className="grid grid-cols-3">
               <Image
@@ -57,7 +57,7 @@ export default async function Home() {
             </div>
             <Img />
             
-            <h2 className="text-xl font-semibold mb-4">Please Leave a References..</h2>
+            <h2 className="text-xl font-semibold mb-4">Please Leave a Reference..</h2>
             <Btn />
           
           

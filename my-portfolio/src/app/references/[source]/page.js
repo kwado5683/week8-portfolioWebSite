@@ -2,36 +2,37 @@ import { db } from "@/app/utils/dbConnection";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import LikeBtn from "@/Components/LikeBtn";
 
-// ✅ Dynamic route handler
+
 export default async function References({ params }) {
-  const source = await params.source; // Make sure your folder is `[source]`, not `[Sources]`
+  const source = await params.source; 
 
-  // ✅ Whitelist table names to prevent SQL injection
+
   const validSources = ["coursemates", "colleagues", "fandf"];
   if (!validSources.includes(source)) {
     return <p className="text-red-500">Invalid reference type.</p>;
   }
 
-  // ✅ Fetch comments from the specific table
+
   const query = await db.query(`SELECT * FROM ${source} ORDER BY ${source}_id DESC`);
   const userentry = query.rows;
 
-  // ✅ Handle form submission
+
   async function handleSubmit(formData) {
     "use server";
   
     const name = formData.get("name");
     const comment = formData.get("comment");
   
-    // Insert into the specific source table
+
     const result = await db.query(
       `INSERT INTO ${source} (name, comment) VALUES ($1, $2) RETURNING ${source}_id`,
       [name, comment]
     );
     const source_id = result.rows[0][`${source}_id`];
   
-    // Prepare insert into all_ref table
+
     let insertQuery = "";
     let insertValue = [];
   
@@ -46,14 +47,13 @@ export default async function References({ params }) {
       insertValue = [name, comment, source, source_id];
     }
   
-    // Insert into all_ref table
+
     await db.query(insertQuery, insertValue);
   
     revalidatePath(`/references/${source}`);
     redirect(`/references/${source}`);
   }
 
-  // ✅ Handle deletion
   async function deleteComment(id) {
     "use server";
 
@@ -115,14 +115,17 @@ export default async function References({ params }) {
                 {new Date(user.time).toDateString()}
               </p>
             )}
-            <form action={deleteComment.bind(null, user[`${source}_id`])}>
-              <button
-                type="submit"
-                className="text-red-600 mt-2 underline hover:text-red-800"
-              >
-                Delete
-              </button>
-            </form>
+            <div>
+              <form action={deleteComment.bind(null, user[`${source}_id`])}>
+                <button
+                  type="submit"
+                  className="text-red-600 mt-2 underline hover:text-red-800"
+                >
+                  Delete
+                </button>
+              </form>
+              <LikeBtn />
+            </div>
           </div>
         ))
       )}
