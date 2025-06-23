@@ -29,7 +29,7 @@ Along the way, I have built and deployed real-world applications using modern te
 
 If the goal is building impactful, meaningful products that solve real problems, then I am excited to contribute and grow alongside a team that shares the same drive.
 
-Beyond tech, I am a husband, a father, and a friend
+Beyond tech, I am a husband, a father, and a friend.
             </p>
             <div className="grid grid-cols-3">
               <Image
