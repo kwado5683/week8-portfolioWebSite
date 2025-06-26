@@ -31,13 +31,15 @@ If the goal is building impactful, meaningful products that solve real problems,
 
 Beyond tech, I am a husband, a father, and a friend.
             </p>
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-3 gap-2">
               <Image
                 src={us}
                 alt="I and wifey"
                 width={400}
                 height={250}
                 placeholder="blur"
+                className="w-100 h-100 object-contain  rounded-lg"
+
               />
               <Image
                 src={dalu}
@@ -45,6 +47,8 @@ Beyond tech, I am a husband, a father, and a friend.
                 width={400}
                 height={50}
                 placeholder="blur"
+                className="w-100 h-100 object-contain  rounded-lg"
+
               />
               <Image
                 src={family}
@@ -52,6 +56,7 @@ Beyond tech, I am a husband, a father, and a friend.
                 width={400}
                 height={100}
                 placeholder="blur"
+                className="w-100 h-100 object-contain  rounded-lg"
               />
 
             </div>

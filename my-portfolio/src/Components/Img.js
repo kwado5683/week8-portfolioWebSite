@@ -22,13 +22,15 @@ export default function Img () {
                 width={300}
                 height={70}
                 placeholder="blur"
-                />
+                className="w-32 h-32 rounded-full"/>
                 <Image
                 src={rt}
                 alt="react"
                 width={300}
                 height={300}
                 placeholder="blur"
+                className="w-32 h-32 rounded-full object-cover"
+
                 />
                 <Image
                 src={njs}
@@ -36,6 +38,7 @@ export default function Img () {
                 width={300}
                 height={300}
                 placeholder="blur"
+                className="w-32 h-32 rounded-full object-cover"
                 />
                 <Image
                 src={nd}
@@ -43,6 +46,7 @@ export default function Img () {
                 width={300}
                 height={300}
                 placeholder="blur"
+                className="w-32 h-32 rounded-full"
                 />
                 <Image
                 src={dt}
@@ -50,6 +54,7 @@ export default function Img () {
                 width={300}
                 height={300}
                 placeholder="blur"
+                className="w-32 h-32 rounded-full"
                 />
             </div>
         </div>
