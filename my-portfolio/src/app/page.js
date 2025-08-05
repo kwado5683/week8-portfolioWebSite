@@ -6,6 +6,8 @@ import Nav from "@/Components/Nav";
 import us from "@/../public/images/us.jpeg";
 import family from "@/../public/images/family.jpeg";
 import dalu from "@/../public/images/dalu.jpeg";
+// import LikeBtn from "@/Components/LikeBtn";
+
 
 
 
@@ -22,14 +24,14 @@ export default async function Home() {
   return (
           <main>
             <Nav />
-            <p className="border-8 my-5 border-gray-300 shadow-lg">Coming from a decade-long career in safety management and transitioning into full-stack development was no easy feat.
+            <p className="border-8 p-5 my-5 border-gray-300 shadow-lg">Coming from a decade-long career in safety management and transitioning into full-stack development was no easy feat.
 It required determination, teamwork, continuous learning, and a genuine passion for problem-solving.
 
-Along the way, I have built and deployed real-world applications using modern technologies, always striving to create practical, user-focused solutions. I take pride in being innovative, adaptable, and always eager to learn something new.
+I take pride in being innovative, adaptable, and always eager to learn something new.
 
 If the goal is building impactful, meaningful products that solve real problems, then I am excited to contribute and grow alongside a team that shares the same drive.
 
-Beyond tech, I am a husband, a father, and a friend.
+
             </p>
             <div className="grid grid-cols-3 gap-2">
               <Image
@@ -62,7 +64,8 @@ Beyond tech, I am a husband, a father, and a friend.
             </div>
             <Img />
             
-            <h2 className="text-xl font-semibold mb-4">Please Leave a Reference..</h2>
+            <h2 className="text-xl font-semibold mt-24 p-5 text-red-600">Please Leave a Reference...</h2>
+
             <Btn />
           
           
@@ -74,6 +77,8 @@ Beyond tech, I am a husband, a father, and a friend.
                       <h3 className="font-bold">{refs.name}</h3>
                       <h5>{refs.source}</h5>
                       <p>{refs.comment}</p>
+                      {/* <LikeBtn /> */}
+
                     </div>
             ))
             )}

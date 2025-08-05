@@ -16,16 +16,18 @@ export default function LikeBtn({ commentId }) {
   }, [localStorageKey]);
 
   const handleClick = () => {
+    if (liked ) return;
     const newLikes = likes + 1;
     setLikes(newLikes);
     setLiked(true);
     localStorage.setItem(localStorageKey, newLikes.toString());
+
   };
 
   return (
     <button
       onClick={handleClick}
-      className={`mt-2 underline ${liked ? "text-red-600" : "text-blue-600"} hover:opacity-80`}
+      className={`mt-2  ${liked ? "text-red-600" : "text-grey-600"} hover:opacity-80`}
     >
       ♥{likes}
     </button>

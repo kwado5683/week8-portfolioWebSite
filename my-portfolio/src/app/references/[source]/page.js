@@ -2,14 +2,13 @@ import { db } from "@/app/utils/dbConnection";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import LikeBtn from "@/Components/LikeBtn";
 
 
 export default async function References({ params }) {
   const source = await params.source; 
 
 
-  const validSources = ["coursemates", "colleagues", "fandf"];
+  const validSources = ["coursemates", "colleagues", "fandf","business"];
   if (!validSources.includes(source)) {
     return <p className="text-red-500">Invalid reference type.</p>;
   }
@@ -43,6 +42,9 @@ export default async function References({ params }) {
       insertQuery = `INSERT INTO all_ref (name, comment, source, colleagues_id) VALUES ($1, $2, $3, $4)`;
       insertValue = [name, comment, source, source_id];
     } else if (source === "fandf") {
+      insertQuery = `INSERT INTO all_ref (name, comment, source, fandf_id) VALUES ($1, $2, $3, $4)`;
+      insertValue = [name, comment, source, source_id];
+    } else if (source === "business") {
       insertQuery = `INSERT INTO all_ref (name, comment, source, fandf_id) VALUES ($1, $2, $3, $4)`;
       insertValue = [name, comment, source, source_id];
     }
@@ -116,15 +118,14 @@ export default async function References({ params }) {
               </p>
             )}
             <div>
-              <form action={deleteComment.bind(null, user[`${source}_id`])}>
+              {/* <form action={deleteComment.bind(null, user[`${source}_id`])}>
                 <button
                   type="submit"
                   className="text-red-600 mt-2 underline hover:text-red-800"
                 >
                   Delete
                 </button>
-              </form>
-              <LikeBtn />
+              </form> */}
             </div>
           </div>
         ))

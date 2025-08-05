@@ -14,22 +14,23 @@ export default function Img () {
 
     return(
         <div >
-            <h3 className="text-center">My Stack</h3>
-            <div className="grid grid-cols-5">
+            <h3 className="text-center mt-24 w-full border bg-purple-500 text-white py-2">My Stack</h3>
+
+            <div className="grid grid-cols-5 mt-10 p-10 pl-5">
                 <Image
                 src={js}
                 alt="javascript"
                 width={300}
                 height={70}
                 placeholder="blur"
-                className="w-32 h-32 rounded-full"/>
+                className="w-32 h-32 rounded-full m-10"/>
                 <Image
                 src={rt}
                 alt="react"
                 width={300}
                 height={300}
                 placeholder="blur"
-                className="w-32 h-32 rounded-full object-cover"
+                className="w-32 h-32 rounded-full object-cover m-10"
 
                 />
                 <Image
@@ -38,7 +39,7 @@ export default function Img () {
                 width={300}
                 height={300}
                 placeholder="blur"
-                className="w-32 h-32 rounded-full object-cover"
+                className="w-32 h-32 rounded-full object-cover m-10"
                 />
                 <Image
                 src={nd}
@@ -46,7 +47,7 @@ export default function Img () {
                 width={300}
                 height={300}
                 placeholder="blur"
-                className="w-32 h-32 rounded-full"
+                className="w-32 h-32 rounded-full m-10"
                 />
                 <Image
                 src={dt}
@@ -54,7 +55,8 @@ export default function Img () {
                 width={300}
                 height={300}
                 placeholder="blur"
-                className="w-32 h-32 rounded-full"
+                className="w-32 h-32 rounded-full m-10"
+                
                 />
             </div>
         </div>
