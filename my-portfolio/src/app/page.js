@@ -8,8 +8,29 @@ import family from "@/../public/images/family.jpeg";
 import dalu from "@/../public/images/dalu.jpeg";
 
 export default async function Home() {
-  const query = await db.query(`SELECT * FROM all_ref ORDER BY reference_id DESC`);
-  const allrefs = query.rows;
+  let allrefs = [];
+  
+  try {
+    const query = await db.query(`SELECT * FROM all_ref ORDER BY reference_id DESC`);
+    allrefs = query.rows;
+  } catch (error) {
+    console.error('Database query error:', error);
+    // Handle specific error types
+    if (error.code === 'ENOTFOUND' || error.message?.includes('getaddrinfo')) {
+      throw new Error(
+        'Database connection failed: Could not resolve database hostname. ' +
+        'Please check your NEXT_DATABASE_URL in .env.local file. ' +
+        'The database hostname may be incorrect or the Supabase project may have been paused/deleted.'
+      );
+    }
+    if (error.code === 'ECONNREFUSED') {
+      throw new Error(
+        'Database connection refused. Please check your NEXT_DATABASE_URL and ensure the database is running.'
+      );
+    }
+    // Re-throw other errors
+    throw error;
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-black via-zinc-900 to-black text-white px-4 sm:px-8">
@@ -70,6 +91,17 @@ export default async function Home() {
               <h3 className="font-bold text-lime-300">{refs.name}</h3>
               <h5 className="text-xs text-gray-400">{refs.source}</h5>
               <p className="mt-2 text-sm sm:text-base">{refs.comment}</p>
+              {refs.created_at && (
+                <p className="text-sm text-gray-500 mt-2">
+                  {new Date(refs.created_at).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
+              )}
             </div>
           ))
         )}

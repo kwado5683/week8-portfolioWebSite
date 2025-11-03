@@ -14,8 +14,28 @@ export default async function References({ params }) {
   }
 
 
-  const query = await db.query(`SELECT * FROM ${source} ORDER BY ${source}_id DESC`);
-  const userentry = query.rows;
+  let userentry = [];
+  
+  try {
+    const query = await db.query(`SELECT * FROM ${source} ORDER BY ${source}_id DESC`);
+    userentry = query.rows;
+  } catch (error) {
+    console.error('Database query error:', error);
+    // Handle specific error types
+    if (error.code === 'ENOTFOUND' || error.message?.includes('getaddrinfo')) {
+      return (
+        <main className="max-w-xl mx-auto p-6 space-y-4">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <h2 className="font-bold mb-2">Database Connection Error</h2>
+            <p>Could not connect to the database. Please check your NEXT_DATABASE_URL in .env.local file.</p>
+            <p className="mt-2 text-sm">Error: {error.message}</p>
+          </div>
+          <Link href="/" className="underline text-blue-500">← Back to Home</Link>
+        </main>
+      );
+    }
+    throw error;
+  }
 
 
   async function handleSubmit(formData) {
@@ -24,34 +44,38 @@ export default async function References({ params }) {
     const name = formData.get("name");
     const comment = formData.get("comment");
   
-
-    const result = await db.query(
-      `INSERT INTO ${source} (name, comment) VALUES ($1, $2) RETURNING ${source}_id`,
-      [name, comment]
-    );
-    const source_id = result.rows[0][`${source}_id`];
-  
-
-    let insertQuery = "";
-    let insertValue = [];
-  
-    if (source === "coursemates") {
-      insertQuery = `INSERT INTO all_ref (name, comment, source, coursemates_id) VALUES ($1, $2, $3, $4)`;
-      insertValue = [name, comment, source, source_id];
-    } else if (source === "colleagues") {
-      insertQuery = `INSERT INTO all_ref (name, comment, source, colleagues_id) VALUES ($1, $2, $3, $4)`;
-      insertValue = [name, comment, source, source_id];
-    } else if (source === "fandf") {
-      insertQuery = `INSERT INTO all_ref (name, comment, source, fandf_id) VALUES ($1, $2, $3, $4)`;
-      insertValue = [name, comment, source, source_id];
-    } else if (source === "business") {
-      insertQuery = `INSERT INTO all_ref (name, comment, source, fandf_id) VALUES ($1, $2, $3, $4)`;
-      insertValue = [name, comment, source, source_id];
+    try {
+      const result = await db.query(
+        `INSERT INTO ${source} (name, comment) VALUES ($1, $2) RETURNING ${source}_id`,
+        [name, comment]
+      );
+      const source_id = result.rows[0][`${source}_id`];
+    
+      let insertQuery = "";
+      let insertValue = [];
+    
+      if (source === "coursemates") {
+        insertQuery = `INSERT INTO all_ref (name, comment, source, coursemates_id) VALUES ($1, $2, $3, $4)`;
+        insertValue = [name, comment, source, source_id];
+      } else if (source === "colleagues") {
+        insertQuery = `INSERT INTO all_ref (name, comment, source, colleagues_id) VALUES ($1, $2, $3, $4)`;
+        insertValue = [name, comment, source, source_id];
+      } else if (source === "fandf") {
+        insertQuery = `INSERT INTO all_ref (name, comment, source, fandf_id) VALUES ($1, $2, $3, $4)`;
+        insertValue = [name, comment, source, source_id];
+      } else if (source === "business") {
+        insertQuery = `INSERT INTO all_ref (name, comment, source, business_id) VALUES ($1, $2, $3, $4)`;
+        insertValue = [name, comment, source, source_id];
+      }
+    
+      await db.query(insertQuery, insertValue);
+    } catch (error) {
+      console.error('Database insert error:', error);
+      throw new Error(`Failed to save reference: ${error.message}`);
     }
-  
-
-    await db.query(insertQuery, insertValue);
-  
+    
+    // Perform redirect and revalidation outside try-catch
+    // so redirect() errors can propagate naturally
     revalidatePath(`/references/${source}`);
     redirect(`/references/${source}`);
   }
@@ -59,9 +83,30 @@ export default async function References({ params }) {
   async function deleteComment(id) {
     "use server";
 
-    await db.query(`DELETE FROM ${source} WHERE ${source}_id = $1`, [id]);
-    await db.query(`DELETE FROM all_ref WHERE reference_id = $1 AND source = $2`, [id, source]);
-
+    try {
+      await db.query(`DELETE FROM ${source} WHERE ${source}_id = $1`, [id]);
+      
+      // Delete from all_ref using the appropriate foreign key
+      // Note: With CASCADE DELETE, this may be redundant, but kept for explicit control
+      let deleteQuery = "";
+      if (source === "coursemates") {
+        deleteQuery = `DELETE FROM all_ref WHERE coursemates_id = $1`;
+      } else if (source === "colleagues") {
+        deleteQuery = `DELETE FROM all_ref WHERE colleagues_id = $1`;
+      } else if (source === "fandf") {
+        deleteQuery = `DELETE FROM all_ref WHERE fandf_id = $1`;
+      } else if (source === "business") {
+        deleteQuery = `DELETE FROM all_ref WHERE business_id = $1`;
+      }
+      
+      await db.query(deleteQuery, [id]);
+    } catch (error) {
+      console.error('Database delete error:', error);
+      throw new Error(`Failed to delete reference: ${error.message}`);
+    }
+    
+    // Perform redirect and revalidation outside try-catch
+    // so redirect() errors can propagate naturally
     revalidatePath(`/references/${source}`);
     redirect(`/references/${source}`);
   }
@@ -118,14 +163,14 @@ export default async function References({ params }) {
               </p>
             )}
             <div>
-              {/* <form action={deleteComment.bind(null, user[`${source}_id`])}>
+              <form action={deleteComment.bind(null, user[`${source}_id`])}>
                 <button
                   type="submit"
                   className="text-red-600 mt-2 underline hover:text-red-800"
                 >
                   Delete
                 </button>
-              </form> */}
+              </form>
             </div>
           </div>
         ))
