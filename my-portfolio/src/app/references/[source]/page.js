@@ -77,6 +77,7 @@ export default async function References({ params }) {
     // Perform redirect and revalidation outside try-catch
     // so redirect() errors can propagate naturally
     revalidatePath(`/references/${source}`);
+    revalidatePath('/'); // Also revalidate the home page to show new comments
     redirect(`/references/${source}`);
   }
 
@@ -87,7 +88,7 @@ export default async function References({ params }) {
       await db.query(`DELETE FROM ${source} WHERE ${source}_id = $1`, [id]);
       
       // Delete from all_ref using the appropriate foreign key
-      // Note: With CASCADE DELETE, this may be redundant, but kept for explicit control
+
       let deleteQuery = "";
       if (source === "coursemates") {
         deleteQuery = `DELETE FROM all_ref WHERE coursemates_id = $1`;
@@ -108,6 +109,7 @@ export default async function References({ params }) {
     // Perform redirect and revalidation outside try-catch
     // so redirect() errors can propagate naturally
     revalidatePath(`/references/${source}`);
+    revalidatePath('/'); // Also revalidate the home page when comments are deleted
     redirect(`/references/${source}`);
   }
 

@@ -7,6 +7,8 @@ import us from "@/../public/images/us.jpeg";
 import family from "@/../public/images/family.jpeg";
 import dalu from "@/../public/images/dalu.jpeg";
 
+export const dynamic = 'force-dynamic'; // Force dynamic rendering to always fetch fresh data
+
 export default async function Home() {
   let allrefs = [];
   
