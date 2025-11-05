@@ -48,31 +48,37 @@ export default async function Home() {
       </p>
 
       {/* Responsive Image Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <Image
-          src={us}
-          alt="I and wifey"
-          width={400}
-          height={250}
-          placeholder="blur"
-          className="w-full h-auto object-cover rounded-xl shadow-md"
-        />
-        <Image
-          src={dalu}
-          alt="dalu and I"
-          width={400}
-          height={250}
-          placeholder="blur"
-          className="w-full h-auto object-cover rounded-xl shadow-md"
-        />
-        <Image
-          src={family}
-          alt="my family"
-          width={400}
-          height={250}
-          placeholder="blur"
-          className="w-full h-auto object-cover rounded-xl shadow-md"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl shadow-md">
+          <Image
+            src={us}
+            alt="I and wifey"
+            fill
+            placeholder="blur"
+            className="object-cover object-center"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          />
+        </div>
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl shadow-md">
+          <Image
+            src={family}
+            alt="dalu and I"
+            fill
+            placeholder="blur"
+            className="object-cover object-center"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          />
+        </div>
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl shadow-md">
+          <Image
+            src={dalu}
+            alt="my family"
+            fill
+            placeholder="blur"
+            className="object-cover object-center"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          />
+        </div>
       </div>
 
       {/* <Img /> */}
